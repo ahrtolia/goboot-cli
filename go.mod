@@ -4,8 +4,10 @@ go 1.23.0
 
 require (
 	github.com/ahrtolia/goboot v0.2.1
+	github.com/gin-gonic/gin v1.10.0
 	github.com/google/wire v0.7.0
 	github.com/spf13/cobra v1.10.2
+	gorm.io/gorm v1.25.12
 )
 
 require (
@@ -24,7 +26,6 @@ require (
 	github.com/gin-contrib/pprof v1.5.2 // indirect
 	github.com/gin-contrib/sse v1.0.0 // indirect
 	github.com/gin-contrib/zap v1.1.4 // indirect
-	github.com/gin-gonic/gin v1.10.0 // indirect
 	github.com/go-errors/errors v1.0.1 // indirect
 	github.com/go-playground/locales v0.14.1 // indirect
 	github.com/go-playground/universal-translator v0.18.1 // indirect
@@ -81,5 +82,4 @@ require (
 	gopkg.in/natefinch/lumberjack.v2 v2.2.1 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
 	gorm.io/driver/mysql v1.5.7 // indirect
-	gorm.io/gorm v1.25.12 // indirect
 )

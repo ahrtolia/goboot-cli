@@ -6,8 +6,6 @@ github.com/BurntSushi/xgb v0.0.0-20160522181843-27f122750802/go.mod h1:IVnqGOEym
 github.com/Depado/ginprom v1.8.1 h1:lrQTddbRqlHq1j6SpJDySDumJlR7FEybzdX0PS3HXPc=
 github.com/Depado/ginprom v1.8.1/go.mod h1:9Z+ahPJLSeMndDfnDTfiuBn2SKVAuL2yvihApWzof9A=
 github.com/HdrHistogram/hdrhistogram-go v1.1.2/go.mod h1:yDgFjdqOqDEKOvasDdhWNXYg9BVp4O+o5f6V/ehm6Oo=
-github.com/ahrtolia/goboot v0.2.0 h1:VzH0LNqYcR26gbI8gqK9DcPR3wut4cmikMTSrVbYmV4=
-github.com/ahrtolia/goboot v0.2.0/go.mod h1:gQV4dycYZrcdPJa6nkcmdEKy4rdn/BF78/DDohvCOio=
 github.com/ahrtolia/goboot v0.2.1 h1:QzCkrDOEgfeb0ZLmHCBCw6WZAX4pv7Fnba2+MGUgZ04=
 github.com/ahrtolia/goboot v0.2.1/go.mod h1:gQV4dycYZrcdPJa6nkcmdEKy4rdn/BF78/DDohvCOio=
 github.com/ajstarks/svgo v0.0.0-20180226025133-644b8db467af/go.mod h1:K08gAheRH3/J6wwsYMMT4xOr94bZjxIelGM0+d/wbFw=
