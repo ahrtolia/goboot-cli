@@ -1,4 +1,4 @@
-module goboot-cli
+module github.com/ahrtolia/goboot-cli
 
 go 1.23.0
 
