@@ -5,11 +5,15 @@
 package main
 
 import (
+	"goboot-cli/goboot/controller"
+	"goboot-cli/goboot/repository"
+	"goboot-cli/goboot/service"
+
 	app "github.com/ahrtolia/goboot/pkg"
 	"github.com/ahrtolia/goboot/pkg/config"
-	"github.com/ahrtolia/goboot/pkg/cron"
-	"github.com/ahrtolia/goboot/pkg/gin"
-	"github.com/ahrtolia/goboot/pkg/gorm"
+	"github.com/ahrtolia/goboot/pkg/cron_starter"
+	"github.com/ahrtolia/goboot/pkg/gin_starter"
+	"github.com/ahrtolia/goboot/pkg/gorm_starter"
 	"github.com/ahrtolia/goboot/pkg/logger"
 	redispkg "github.com/ahrtolia/goboot/pkg/redis"
 
@@ -27,15 +31,15 @@ var (
 	)
 
 	httpSet = wire.NewSet(
-		gin.ProviderSet,
+		gin_starter.ProviderSet,
 	)
 
 	dbSet = wire.NewSet(
-		gorm.ProviderSet,
+		gorm_starter.ProviderSet,
 	)
 
 	cronSet = wire.NewSet(
-		cron.ProviderSet,
+		cron_starter.ProviderSet,
 	)
 
 	redisSet = wire.NewSet(
@@ -54,6 +58,9 @@ var (
 		cronSet,
 		redisSet,
 		appSet,
+		controller.ProviderSet,
+		service.Provider,
+		repository.Provider,
 	)
 )
 

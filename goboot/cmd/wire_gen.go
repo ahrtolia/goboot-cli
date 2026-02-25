@@ -7,14 +7,17 @@
 package main
 
 import (
-	app "github.com/ahrtolia/goboot/pkg"
+	"github.com/ahrtolia/goboot/pkg"
 	"github.com/ahrtolia/goboot/pkg/config"
-	"github.com/ahrtolia/goboot/pkg/cron"
-	"github.com/ahrtolia/goboot/pkg/gin"
-	"github.com/ahrtolia/goboot/pkg/gorm"
+	"github.com/ahrtolia/goboot/pkg/cron_starter"
+	"github.com/ahrtolia/goboot/pkg/gin_starter"
+	"github.com/ahrtolia/goboot/pkg/gorm_starter"
 	"github.com/ahrtolia/goboot/pkg/logger"
-	redispkg "github.com/ahrtolia/goboot/pkg/redis"
+	"github.com/ahrtolia/goboot/pkg/redis"
 	"github.com/google/wire"
+	"goboot-cli/goboot/controller"
+	"goboot-cli/goboot/repository"
+	"goboot-cli/goboot/service"
 )
 
 // Injectors from wire.go:
@@ -26,41 +29,41 @@ func CreateApp(configFile2 string) (*app.App, error) {
 	if err != nil {
 		return nil, err
 	}
-	option, err := gin.NewOption(configManager)
+	option, err := gin_starter.NewOption(configManager)
 	if err != nil {
 		return nil, err
 	}
-	server, err := gin.NewServer(zapLogger, configManager, option)
+	server, err := gin_starter.NewServer(zapLogger, configManager, option)
 	if err != nil {
 		return nil, err
 	}
-	gormOption, err := gorm.NewOption(configManager)
+	gorm_starterOption, err := gorm_starter.NewOption(configManager)
 	if err != nil {
 		return nil, err
 	}
-	db := gorm.New(gormOption)
-	cronOption, err := cron.NewOption(configManager)
+	db := gorm_starter.New(gorm_starterOption)
+	cron_starterOption, err := cron_starter.NewOption(configManager)
 	if err != nil {
 		return nil, err
 	}
-	scheduler, err := cron.NewScheduler(zapLogger, configManager, cronOption)
+	scheduler, err := cron_starter.NewScheduler(zapLogger, configManager, cron_starterOption)
 	if err != nil {
 		return nil, err
 	}
-	redisOption, err := redispkg.NewOption(configManager)
+	redisOption, err := redis.NewOption(configManager)
 	if err != nil {
 		return nil, err
 	}
-	redisClient, err := redispkg.NewClient(zapLogger, configManager, redisOption)
+	client, err := redis.NewClient(zapLogger, configManager, redisOption)
 	if err != nil {
 		return nil, err
 	}
-	context := app.NewContext(configManager, zapLogger, server, db, scheduler, redisClient)
+	context := app.NewContext(configManager, zapLogger, server, db, scheduler, client)
 	loggerStarter := app.NewLoggerStarter(configManager, zapLogger)
 	httpStarter := app.NewHTTPStarter(configManager, server)
 	gormStarter := app.NewGormStarter(configManager, db)
 	cronStarter := app.NewCronStarter(configManager, scheduler)
-	redisStarter := app.NewRedisStarter(configManager, redisClient)
+	redisStarter := app.NewRedisStarter(configManager, client)
 	v := app.NewStarters(loggerStarter, httpStarter, gormStarter, cronStarter, redisStarter)
 	appApp, err := app.New(configManager, context, v)
 	if err != nil {
@@ -76,13 +79,13 @@ var (
 
 	loggerSet = wire.NewSet(logger.ProviderSet)
 
-	httpSet = wire.NewSet(gin.ProviderSet)
+	httpSet = wire.NewSet(gin_starter.ProviderSet)
 
-	dbSet = wire.NewSet(gorm.ProviderSet)
+	dbSet = wire.NewSet(gorm_starter.ProviderSet)
 
-	cronSet = wire.NewSet(cron.ProviderSet)
+	cronSet = wire.NewSet(cron_starter.ProviderSet)
 
-	redisSet = wire.NewSet(redispkg.ProviderSet)
+	redisSet = wire.NewSet(redis.ProviderSet)
 
 	appSet = wire.NewSet(app.ProviderSet)
 
@@ -93,6 +96,6 @@ var (
 		dbSet,
 		cronSet,
 		redisSet,
-		appSet,
+		appSet, controller.ProviderSet, service.Provider, repository.Provider,
 	)
 )
